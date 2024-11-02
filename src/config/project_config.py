@@ -7,6 +7,7 @@ load_dotenv()
 
 class Settings(BaseSettings):
     TOKEN: str
+    SBER_AUTH: str
 
 
 settings = Settings()

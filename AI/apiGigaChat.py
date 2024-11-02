@@ -4,6 +4,8 @@ import requests
 
 import json
 
+from src.config.project_config import settings
+
 
 class Token:
     def get_token(self):  # получить ТОКЕН, чтобы в будущем его использовать для получения ответа от GC
@@ -13,7 +15,7 @@ class Token:
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json',
             'RqUID': f'{str(uuid.uuid4())}',
-            'Authorization': 'Basic NGY1ODhiMjMtN2RjOS00OTM4LWJkMmMtNjJjNzE4ZDkwNGRjOmViMzYyYTYzLTQ2MmEtNDhiYi1iNTU1LTliMmJiODVhZDE5Yg=='
+            'Authorization': settings.SBER_AUTH
         }
 
         return requests.request(method="POST",
@@ -30,7 +32,7 @@ class Token:
             "messages": [
                 {
                     "role": "user",
-                    "content": f"{" ".join(list_with_messages_from_user)}"
+                    "content": " ".join(list_with_messages_from_user)
                 }
             ],
             "stream": False,
