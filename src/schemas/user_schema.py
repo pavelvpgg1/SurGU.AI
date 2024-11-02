@@ -13,7 +13,9 @@ class UserCreate(UserBase):
 
 
 class UserUpdate(UserBase):
-    pass
+    name: str
+    is_man: bool
+    age: int
 
 
 class UserResponse(UserBase):
