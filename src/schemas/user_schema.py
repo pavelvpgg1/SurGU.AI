@@ -6,6 +6,7 @@ class UserBase(BaseModel):
     name: str
     is_man: bool
     age: int
+    dialog: str
 
 
 class UserCreate(UserBase):
@@ -16,6 +17,7 @@ class UserUpdate(UserBase):
     name: str
     is_man: bool
     age: int
+    dialog: str
 
 
 class UserResponse(UserBase):
