@@ -8,6 +8,7 @@ class UserModel(Base):
     __tablename__ = "users"
 
     id: Mapped[str] = mapped_column(String, primary_key=True)
+    name: Mapped[str] = mapped_column(String)
     is_man: Mapped[bool]
     age: Mapped[int]
     dialog: Mapped[str] = mapped_column(Text)
