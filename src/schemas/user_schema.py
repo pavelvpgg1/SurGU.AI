@@ -2,7 +2,10 @@ from pydantic import BaseModel
 
 
 class UserBase(BaseModel):
+    id: str
     name: str
+    is_man: bool
+    age: int
 
 
 class UserCreate(UserBase):
@@ -14,7 +17,7 @@ class UserUpdate(UserBase):
 
 
 class UserResponse(UserBase):
-    id: int
+    pass
 
 
 class UserListResponse(BaseModel):
