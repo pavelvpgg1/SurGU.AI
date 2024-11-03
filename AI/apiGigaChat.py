@@ -6,8 +6,7 @@ import json
 
 from src.config.project_config import settings
 
-
-class Token:
+class UseAI:
     def get_token(self):  # получить ТОКЕН, чтобы в будущем его использовать для получения ответа от GC
         url = "https://ngw.devices.sberbank.ru:9443/api/v2/oauth"
         payload = 'scope=GIGACHAT_API_PERS'
@@ -32,7 +31,7 @@ class Token:
             "messages": [
                 {
                     "role": "user",
-                    "content": " ".join(list_with_messages_from_user)
+                    "content": f"{" ".join(list_with_messages_from_user)}"
                 }
             ],
             "stream": False,
@@ -51,6 +50,6 @@ class Token:
                                 verify="certificate.cer").json().get('choices')[0].get('message').get('content')
 
 # Пример использования
-# token = Token().get_token()
+# token = UseAI().get_token()
 # list_messages = ["Привет!", "Меня сегодня обидели в школе", "Да, это просто ужасно"]
-# print(Token().get_answer(list_messages, token))
+# print(UseAI().get_answer(list_messages, token))
