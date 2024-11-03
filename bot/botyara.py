@@ -1,28 +1,21 @@
 import asyncio
 import logging
-from email.message import Message
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
-from pyexpat.errors import messages
 
 from AI.apiGigaChat import UseAI
 
-from dotenv import load_dotenv
+from src.config.project_config import settings
 
-settings = load_dotenv()
-# Включаем логирование, чтобы не пропустить важные сообщения
+
 logging.basicConfig(level=logging.INFO)
-# Объект бота
-bot_token = Bot(token="7696658425:AAFUmZxrEOskasUXn0XG-ZGrc9EurAXPvP0")
 AI_token = UseAI().get_token()
-
-# Диспетчер
+bot_token = Bot(token=settings.TOKEN)
 dp = Dispatcher()
 dct_users = {}
 
 
-# Хэндлер на команду /start
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
     await message.answer("Я твой личный психолог! Обращайся ко мне по любому вопросу! "
@@ -42,16 +35,15 @@ async def cmd_delete_history(message: types.Message):
 async def any_message(message: types.Message):
     await message.answer("Сообщение принято, готовим ответ...⌛")
     if str(message.from_user.id) not in dct_users:
-        dct_users[str(message.from_user.id)] = [message.text]
+        dct_users[str(message.from_user.id)] = [f"Ты - психолог-бот в телеграме. Твоя задача помогать людям с их вопросами и переживаниями. А вот это сообщение от пользователя {message.text}"]
     else:
-        dct_users[str(message.from_user.id)] += [message.text]
+        dct_users[str(message.from_user.id)] += [f"Ты - психолог-бот в телеграме. Твоя задача помогать людям с их вопросами и переживаниями. А вот это сообщение от пользователя {message.text}"]
     answer = UseAI().get_answer(dct_users.get(str(message.from_user.id)), AI_token)
     await message.answer(answer)
-    dct_users[str(message.from_user.id)] += [answer]
+    dct_users[str(message.from_user.id)] += [f"{answer} - А вот это уже твой ответ"]
     print(dct_users)
 
 
-# Запуск процесса поллинга новых апдейтов
 async def main():
     await dp.start_polling(bot_token)
 
